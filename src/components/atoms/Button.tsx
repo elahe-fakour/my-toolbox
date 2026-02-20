@@ -1,27 +1,31 @@
+import clsx from "clsx";
+
 type ButtonProps = {
-  children: React.ReactNode
-  onClick?: () => void
-  variant?: 'primary' | 'secondary'
-}
+  children: React.ReactNode;
+  onClick?: () => void;
+  variant?: "primary" | "secondary";
+  className?: string;
+};
 
 export function Button({
   children,
   onClick,
-  variant = 'primary',
+  variant = "primary",
+  className,
 }: ButtonProps) {
-  const base =
-    'px-4 py-2 rounded-xl transition font-medium backdrop-blur-md'
-
-  const variants = {
-    primary:
-      'bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-lg hover:opacity-90',
-    secondary:
-      'bg-white/50 text-gray-700 border border-white/30 hover:bg-white/70',
-  }
-
   return (
-    <button onClick={onClick} className={`${base} ${variants[variant]}`}>
+    <button
+      onClick={onClick}
+      className={clsx(
+        "rounded-xl px-4 py-2 transition font-medium",
+        variant === "primary" &&
+          "bg-sky-500 text-white hover:bg-sky-600",
+        variant === "secondary" &&
+          "bg-white/60 text-slate-700 hover:bg-white/80",
+        className
+      )}
+    >
       {children}
     </button>
-  )
+  );
 }
