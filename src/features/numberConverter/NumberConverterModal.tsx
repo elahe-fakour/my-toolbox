@@ -12,22 +12,40 @@ type Props = {
   onClose: () => void;
 };
 
+type CopyStatus = "idle" | "copied" | "error";
+
 export function NumberConverterModal({ isOpen, onClose }: Props) {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState<"fa-en" | "en-fa">("fa-en");
+  const [copyStatus, setCopyStatus] = useState<CopyStatus>("idle");
 
   const handleConvert = () => {
     if (!input.trim()) return;
 
     const result = mode === "fa-en" ? faToEn(input) : enToFa(input);
     setOutput(result);
+    setCopyStatus("idle");
   };
 
   const changeMode = (newMode: "fa-en" | "en-fa") => {
     setMode(newMode);
     setInput("");
     setOutput("");
+    setCopyStatus("idle");
+  };
+
+  const handleCopy = async () => {
+    if (!output.trim()) return;
+
+    try {
+      await navigator.clipboard.writeText(output);
+      setCopyStatus("copied");
+      setTimeout(() => setCopyStatus("idle"), 1500);
+    } catch {
+      setCopyStatus("error");
+      setTimeout(() => setCopyStatus("idle"), 1500);
+    }
   };
 
   return (
@@ -42,15 +60,15 @@ export function NumberConverterModal({ isOpen, onClose }: Props) {
           <Button
             variant={mode === "fa-en" ? "primary" : "secondary"}
             onClick={() => changeMode("fa-en")}
-          >            English → فارسی
-
+          >
+            English → فارسی
           </Button>
 
           <Button
             variant={mode === "en-fa" ? "primary" : "secondary"}
             onClick={() => changeMode("en-fa")}
-          >            فارسی → English
-
+          >
+            فارسی → English
           </Button>
         </div>
 
@@ -95,17 +113,32 @@ export function NumberConverterModal({ isOpen, onClose }: Props) {
         <div className="space-y-2">
           <label className="text-sm text-slate-600">نتیجه</label>
 
-          <input
-            type="text"
-            readOnly
-            value={output}
-            placeholder=""
-            className="
-              w-full rounded-xl p-3
-              bg-white/80 border border-white/30
-              text-slate-700
-            "
-          />
+          <div className="flex gap-2">
+            <input
+              type="text"
+              readOnly
+              value={output}
+              placeholder=""
+              className="
+                flex-1 rounded-xl p-3
+                bg-white/80 border border-white/30
+                text-slate-700
+              "
+            />
+
+            <Button
+              variant="secondary"
+              onClick={handleCopy}
+              disabled={!output.trim()}
+              className="min-w-[90px]"
+            >
+              {copyStatus === "copied"
+                ? "کپی شد"
+                : copyStatus === "error"
+                ? "خطا"
+                : "کپی"}
+            </Button>
+          </div>
         </div>
       </div>
     </BaseModal>
