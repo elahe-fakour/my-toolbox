@@ -14,18 +14,25 @@ const Header = () => {
       "
     >
       <div className="h-14 max-w-7xl mx-auto px-4 flex items-center justify-between">
-        <span className="text-sm font-medium text-[var(--text-main)]">
-          ابزارهای کاربردی
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-semibold text-[var(--text-main)]">
+            ابزارهای کاربردی
+          </span>
+        </div>
 
         <button
           onClick={toggleTheme}
           className="
             w-9 h-9 rounded-lg
             flex items-center justify-center
-            hover:bg-black/10 dark:hover:bg-white/10
+            bg-black/5 dark:bg-white/15
+            border border-black/5 dark:border-white/20
+            text-slate-700 dark:text-amber-300
+            hover:bg-black/10 dark:hover:bg-white/25
             transition
           "
+          aria-label="Toggle theme"
+          title="تغییر تم"
         >
           {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
         </button>

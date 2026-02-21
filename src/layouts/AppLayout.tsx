@@ -7,7 +7,7 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
       dir="rtl"
       className="
         min-h-screen transition-colors duration-300
-        bg-[linear-gradient(135deg,var(--bg-start),var(--bg-middle),var(--bg-end))]
+        bg-[radial-gradient(1200px_circle_at_20%_10%,rgba(56,189,248,0.12),transparent_60%),radial-gradient(900px_circle_at_80%_20%,rgba(139,92,246,0.10),transparent_55%),linear-gradient(135deg,var(--bg-start),var(--bg-middle),var(--bg-end))]
       "
     >
       <Header />
