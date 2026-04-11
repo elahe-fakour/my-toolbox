@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { gregorianToShamsi } from "./utils";
 
 type Props = {
   value: string;
   onChange: (date: string) => void;
 };
 
-const months = [
+const monthNames = [
   "فروردین",
   "اردیبهشت",
   "خرداد",
@@ -20,19 +21,43 @@ const months = [
   "اسفند",
 ];
 
+function getDaysInMonth(month: number) {
+  if (month <= 6) return 31;
+  if (month <= 11) return 30;
+  return 29;
+}
+
 export function ShamsiDatePicker({ value, onChange }: Props) {
-  const [year, setYear] = useState(1404);
-  const [month, setMonth] = useState(1);
+  const today = new Date();
+  const todayGregorian = today.toISOString().split("T")[0];
+  const todayShamsi = gregorianToShamsi(todayGregorian);
 
-  const daysInMonth = month <= 6 ? 31 : month <= 11 ? 30 : 29;
+  const [ty, tm, td] = todayShamsi.split("-").map(Number);
 
-  const prevMonth = () => {
-    if (month === 1) {
-      setMonth(12);
-      setYear((y) => y - 1);
-    } else {
-      setMonth((m) => m - 1);
+  const [year, setYear] = useState(ty);
+  const [month, setMonth] = useState(tm);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (value) {
+      const [y, m, d] = value.split("-").map(Number);
+      setYear(y);
+      setMonth(m);
+      setSelectedDay(d);
     }
+  }, [value]);
+
+  const days = Array.from(
+    { length: getDaysInMonth(month) },
+    (_, i) => i + 1
+  );
+
+  const selectDay = (day: number) => {
+    setSelectedDay(day);
+    const formatted = `${year}-${String(month).padStart(2, "0")}-${String(
+      day
+    ).padStart(2, "0")}`;
+    onChange(formatted);
   };
 
   const nextMonth = () => {
@@ -44,68 +69,87 @@ export function ShamsiDatePicker({ value, onChange }: Props) {
     }
   };
 
-  const prevYear = () => {
-    setYear((y) => y - 1);
+  const prevMonth = () => {
+    if (month === 1) {
+      setMonth(12);
+      setYear((y) => y - 1);
+    } else {
+      setMonth((m) => m - 1);
+    }
   };
 
-  const nextYear = () => {
-    setYear((y) => y + 1);
-  };
-
-  const selectDay = (day: number) => {
-    const m = month < 10 ? `0${month}` : month;
-    const d = day < 10 ? `0${day}` : day;
-
-    onChange(`${year}-${m}-${d}`);
-  };
+  const nextYear = () => setYear((y) => y + 1);
+  const prevYear = () => setYear((y) => y - 1);
 
   return (
-    <div className="w-full rounded-xl p-3 bg-white/60 border border-white/30 backdrop-blur-md">
+    <div className="bg-white/60 border border-white/30 rounded-xl p-4 backdrop-blur-md">
 
-      <div className="flex justify-between items-center mb-3">
+      <div className="flex items-center justify-between mb-3">
 
-        <button onClick={prevYear}>«</button>
+        <button
+          onClick={prevYear}
+          className="px-2 py-1 rounded hover:bg-gray-200"
+        >
+          «
+        </button>
 
-        <button onClick={prevMonth}>‹</button>
+        <button
+          onClick={prevMonth}
+          className="px-2 py-1 rounded hover:bg-gray-200"
+        >
+          ‹
+        </button>
 
-        <div>
-          {months[month - 1]} {year}
-        </div>
+        <span className="font-semibold">
+          {monthNames[month - 1]} {year}
+        </span>
 
-        <button onClick={nextMonth}>›</button>
+        <button
+          onClick={nextMonth}
+          className="px-2 py-1 rounded hover:bg-gray-200"
+        >
+          ›
+        </button>
 
-        <button onClick={nextYear}>»</button>
-
+        <button
+          onClick={nextYear}
+          className="px-2 py-1 rounded hover:bg-gray-200"
+        >
+          »
+        </button>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 text-center text-sm">
+      <div className="grid grid-cols-7 gap-2 text-center">
+        {days.map((day) => {
+          const isToday =
+            year === ty && month === tm && day === td;
 
-        {["ش","ی","د","س","چ","پ","ج"].map((d) => (
-          <div key={d} className="font-bold">{d}</div>
-        ))}
-
-        {Array.from({ length: daysInMonth }).map((_, i) => {
-          const day = i + 1;
+          const isSelected = selectedDay === day;
 
           return (
             <button
               key={day}
               onClick={() => selectDay(day)}
-              className="p-2 rounded hover:bg-blue-500 hover:text-white"
+              className={`
+                p-2 rounded-lg transition
+                ${isSelected ? "bg-blue-600 text-white" : ""}
+                ${
+                  !isSelected && isToday
+                    ? "border-2 border-blue-500 text-blue-600 font-bold"
+                    : ""
+                }
+                ${
+                  !isSelected && !isToday
+                    ? "hover:bg-gray-200"
+                    : ""
+                }
+              `}
             >
               {day}
             </button>
           );
         })}
-
       </div>
-
-      {value && (
-        <div className="mt-2 text-sm text-center">
-          {value}
-        </div>
-      )}
-
     </div>
   );
 }
