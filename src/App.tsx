@@ -2,15 +2,29 @@ import { useState } from "react";
 import AppLayout from "./layouts/AppLayout";
 
 import { ToolCard } from "./components/molecules/ToolCard";
+
+// Modals
 import { NumberConverterModal } from "./features/numberConverter/NumberConverterModal";
 import { DateConverterModal } from "./features/dateConverter/DateConverterModal";
+import { CalculatorModal } from "./features/calculator/CalculatorModal";
+import { HourglassModal } from "./features/hourglass/HourglassModal";
 
 const App = () => {
+  // تبدیل عدد
   const [numberOpen, setNumberOpen] = useState(false);
+
+  // تبدیل تاریخ
   const [dateOpen, setDateOpen] = useState(false);
+
+  // ماشین حساب
+  const [calcOpen, setCalcOpen] = useState(false);
+
+  // تایمر ساعت‌شنی
+  const [hourglassOpen, setHourglassOpen] = useState(false);
 
   return (
     <AppLayout>
+      {/* Header Section */}
       <section
         className="
           relative overflow-hidden
@@ -42,7 +56,9 @@ const App = () => {
         />
       </section>
 
+      {/* Tool Cards */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        
         <ToolCard
           title="تبدیل اعداد فارسی و انگلیسی"
           icon="🔢"
@@ -54,8 +70,21 @@ const App = () => {
           icon="📅"
           onClick={() => setDateOpen(true)}
         />
+
+        <ToolCard
+          title="ماشین حساب"
+          icon="🧮"
+          onClick={() => setCalcOpen(true)}
+        />
+
+        <ToolCard
+          title="تایمر ساعت شنی"
+          icon="⏳"
+          onClick={() => setHourglassOpen(true)}
+        />
       </section>
 
+      {/* Modals */}
       <NumberConverterModal
         isOpen={numberOpen}
         onClose={() => setNumberOpen(false)}
@@ -64,6 +93,16 @@ const App = () => {
       <DateConverterModal
         isOpen={dateOpen}
         onClose={() => setDateOpen(false)}
+      />
+
+      <CalculatorModal
+        isOpen={calcOpen}
+        onClose={() => setCalcOpen(false)}
+      />
+
+      <HourglassModal
+        isOpen={hourglassOpen}
+        onClose={() => setHourglassOpen(false)}
       />
     </AppLayout>
   );

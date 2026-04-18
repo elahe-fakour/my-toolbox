@@ -1,0 +1,8 @@
+export function safeEval(expression: string): number | string {
+  try {
+    // eslint-disable-next-line no-eval
+    return eval(expression);
+  } catch {
+    return "خطا";
+  }
+}
