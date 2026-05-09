@@ -8,6 +8,7 @@ import { NumberConverterModal } from "./features/numberConverter/NumberConverter
 import { DateConverterModal } from "./features/dateConverter/DateConverterModal";
 import { CalculatorModal } from "./features/calculator/CalculatorModal";
 import { HourglassModal } from "./features/hourglass/HourglassModal";
+import { TextCounterModal } from "./features/text-counter/TextCounterModal";
 
 const App = () => {
   // تبدیل عدد
@@ -21,6 +22,9 @@ const App = () => {
 
   // تایمر ساعت‌شنی
   const [hourglassOpen, setHourglassOpen] = useState(false);
+
+  // شمارش متن
+  const [textCounterOpen, setTextCounterOpen] = useState(false);
 
   return (
     <AppLayout>
@@ -82,6 +86,12 @@ const App = () => {
           icon="⏳"
           onClick={() => setHourglassOpen(true)}
         />
+
+        <ToolCard
+          title="شمارش حروف متن"
+          icon="✍️"
+          onClick={() => setTextCounterOpen(true)}
+        />
       </section>
 
       {/* Modals */}
@@ -103,6 +113,11 @@ const App = () => {
       <HourglassModal
         isOpen={hourglassOpen}
         onClose={() => setHourglassOpen(false)}
+      />
+
+      <TextCounterModal
+        isOpen={textCounterOpen}
+        onClose={() => setTextCounterOpen(false)}
       />
     </AppLayout>
   );
