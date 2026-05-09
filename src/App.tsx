@@ -10,6 +10,7 @@ import { CalculatorModal } from "./features/calculator/CalculatorModal";
 import { HourglassModal } from "./features/hourglass/HourglassModal";
 import { TextCounterModal } from "./features/text-counter/TextCounterModal";
 import { PasswordGeneratorModal } from "./features/password-generator/PasswordGeneratorModal";
+import { TextCaseConverterModal } from "./features/text-case-converter/TextCaseConverterModal";
 
 const App = () => {
   const [numberOpen, setNumberOpen] = useState(false);
@@ -18,20 +19,20 @@ const App = () => {
   const [hourglassOpen, setHourglassOpen] = useState(false);
   const [textCounterOpen, setTextCounterOpen] = useState(false);
   const [passwordOpen, setPasswordOpen] = useState(false);
+  const [textCaseOpen, setTextCaseOpen] = useState(false);
 
   return (
     <AppLayout>
-      {/* Header Section */}
-      <section className="relative overflow-hidden rounded-2xl p-6 sm:p-8 mb-8 bg-[color:var(--glass-bg)] border border-[color:var(--glass-border)] backdrop-blur-2xl shadow-[0_20px_45px_-25px_rgba(0,0,0,0.35)]">
+      {/* Header */}
+      <section className="relative overflow-hidden rounded-2xl p-6 sm:p-8 mb-8 bg-[color:var(--glass-bg)] border border-[color:var(--glass-border)] backdrop-blur-2xl">
         <div className="flex flex-col items-center text-center gap-3">
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight bg-gradient-to-l from-sky-500 via-indigo-500 to-violet-500 text-transparent bg-clip-text">
+          <h1 className="text-3xl sm:text-4xl font-black bg-gradient-to-l from-sky-500 via-indigo-500 to-violet-500 text-transparent bg-clip-text">
             Toolbox
           </h1>
         </div>
-        <div className="mt-6 h-[2px] w-32 mx-auto bg-gradient-to-l from-sky-400 via-indigo-400 to-violet-400 rounded-full" />
       </section>
 
-      {/* Tool Cards */}
+      {/* Tools */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <ToolCard title="تبدیل اعداد فارسی و انگلیسی" icon="🔢" onClick={() => setNumberOpen(true)} />
         <ToolCard title="تبدیل تاریخ شمسی و میلادی" icon="📅" onClick={() => setDateOpen(true)} />
@@ -39,6 +40,7 @@ const App = () => {
         <ToolCard title="تایمر ساعت شنی" icon="⏳" onClick={() => setHourglassOpen(true)} />
         <ToolCard title="شمارش حروف متن" icon="✍️" onClick={() => setTextCounterOpen(true)} />
         <ToolCard title="تولید رمز عبور" icon="🔐" onClick={() => setPasswordOpen(true)} />
+        <ToolCard title="مبدل متن (A/a)" icon="🔤" onClick={() => setTextCaseOpen(true)} />
       </section>
 
       {/* Modals */}
@@ -48,6 +50,7 @@ const App = () => {
       <HourglassModal isOpen={hourglassOpen} onClose={() => setHourglassOpen(false)} />
       <TextCounterModal isOpen={textCounterOpen} onClose={() => setTextCounterOpen(false)} />
       <PasswordGeneratorModal isOpen={passwordOpen} onClose={() => setPasswordOpen(false)} />
+      <TextCaseConverterModal isOpen={textCaseOpen} onClose={() => setTextCaseOpen(false)} />
     </AppLayout>
   );
 };
