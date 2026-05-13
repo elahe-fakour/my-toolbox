@@ -5,9 +5,10 @@ type Props = {
   onClose: () => void
   children: ReactNode
   title: string
+  titleClassName?: string   // ✅ اضافه شده
 }
 
-export function BaseModal({ isOpen, onClose, children, title }: Props) {
+export function BaseModal({ isOpen, onClose, children, title, titleClassName }: Props) {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -27,10 +28,26 @@ export function BaseModal({ isOpen, onClose, children, title }: Props) {
         onClick={(e) => e.stopPropagation()}
         className="w-[90%] max-w-md rounded-2xl bg-white/50 backdrop-blur-xl border border-white/30 shadow-2xl p-6 animate-fadeIn"
       >
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="font-semibold text-lg">{title}</h2>
-          <button onClick={onClose}>✕</button>
+        <div className="flex justify-between items-center mb-4 relative">
+          {/* عنوان وسط‌چین و قابل استایل */}
+          <h2
+            className={`
+              w-full text-center font-semibold text-2xl tracking-tight
+              ${titleClassName ?? "text-gray-800"}
+            `}
+          >
+            {title}
+          </h2>
+
+          {/* دکمه بستن */}
+          <button
+            onClick={onClose}
+            className="absolute right-0 top-1 text-gray-600 hover:text-gray-800 text-xl"
+          >
+            ✕
+          </button>
         </div>
+
         {children}
       </div>
     </div>

@@ -11,6 +11,7 @@ import { HourglassModal } from "./features/hourglass/HourglassModal";
 import { TextCounterModal } from "./features/text-counter/TextCounterModal";
 import { PasswordGeneratorModal } from "./features/password-generator/PasswordGeneratorModal";
 import { TextCaseConverterModal } from "./features/text-case-converter/TextCaseConverterModal";
+import { MindfulBreathingModal } from "./features/mindful-breathing/MindfulBreathingModal";
 
 const App = () => {
   const [numberOpen, setNumberOpen] = useState(false);
@@ -20,6 +21,7 @@ const App = () => {
   const [textCounterOpen, setTextCounterOpen] = useState(false);
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [textCaseOpen, setTextCaseOpen] = useState(false);
+  const [breathingOpen, setBreathingOpen] = useState(false);
 
   return (
     <AppLayout>
@@ -41,6 +43,9 @@ const App = () => {
         <ToolCard title="شمارش حروف متن" icon="✍️" onClick={() => setTextCounterOpen(true)} />
         <ToolCard title="تولید رمز عبور" icon="🔐" onClick={() => setPasswordOpen(true)} />
         <ToolCard title="مبدل متن (A/a)" icon="🔤" onClick={() => setTextCaseOpen(true)} />
+        
+        {/* New Tool */}
+        <ToolCard title="تنفس آگاهانه" icon="🧘‍♂️" onClick={() => setBreathingOpen(true)} />
       </section>
 
       {/* Modals */}
@@ -51,6 +56,10 @@ const App = () => {
       <TextCounterModal isOpen={textCounterOpen} onClose={() => setTextCounterOpen(false)} />
       <PasswordGeneratorModal isOpen={passwordOpen} onClose={() => setPasswordOpen(false)} />
       <TextCaseConverterModal isOpen={textCaseOpen} onClose={() => setTextCaseOpen(false)} />
+      
+      {/* مدال جدید تنفس */}
+      <MindfulBreathingModal isOpen={breathingOpen} onClose={() => setBreathingOpen(false)} />
+
     </AppLayout>
   );
 };
