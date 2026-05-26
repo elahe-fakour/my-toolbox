@@ -1,6 +1,5 @@
 import { useState } from "react";
 import AppLayout from "./layouts/AppLayout";
-
 import { ToolCard } from "./components/molecules/ToolCard";
 
 // Modals
@@ -34,7 +33,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Tools */}
+      {/* Tools Grid */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <ToolCard title="تبدیل اعداد فارسی و انگلیسی" icon="🔢" onClick={() => setNumberOpen(true)} />
         <ToolCard title="تبدیل تاریخ شمسی و میلادی" icon="📅" onClick={() => setDateOpen(true)} />
@@ -43,12 +42,10 @@ const App = () => {
         <ToolCard title="شمارش حروف متن" icon="✍️" onClick={() => setTextCounterOpen(true)} />
         <ToolCard title="تولید رمز عبور" icon="🔐" onClick={() => setPasswordOpen(true)} />
         <ToolCard title="مبدل متن (A/a)" icon="🔤" onClick={() => setTextCaseOpen(true)} />
-        
-        {/* New Tool */}
         <ToolCard title="تنفس آگاهانه" icon="🧘‍♂️" onClick={() => setBreathingOpen(true)} />
       </section>
 
-      {/* Modals */}
+      {/* Modals Containers */}
       <NumberConverterModal isOpen={numberOpen} onClose={() => setNumberOpen(false)} />
       <DateConverterModal isOpen={dateOpen} onClose={() => setDateOpen(false)} />
       <CalculatorModal isOpen={calcOpen} onClose={() => setCalcOpen(false)} />
@@ -56,10 +53,7 @@ const App = () => {
       <TextCounterModal isOpen={textCounterOpen} onClose={() => setTextCounterOpen(false)} />
       <PasswordGeneratorModal isOpen={passwordOpen} onClose={() => setPasswordOpen(false)} />
       <TextCaseConverterModal isOpen={textCaseOpen} onClose={() => setTextCaseOpen(false)} />
-      
-      {/* مدال جدید تنفس */}
       <MindfulBreathingModal isOpen={breathingOpen} onClose={() => setBreathingOpen(false)} />
-
     </AppLayout>
   );
 };
