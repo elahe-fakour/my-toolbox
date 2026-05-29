@@ -11,6 +11,7 @@ import { TextCounterModal } from "./features/text-counter/TextCounterModal";
 import { PasswordGeneratorModal } from "./features/password-generator/PasswordGeneratorModal";
 import { TextCaseConverterModal } from "./features/text-case-converter/TextCaseConverterModal";
 import { MindfulBreathingModal } from "./features/mindful-breathing/MindfulBreathingModal";
+import { NumberGuessModal } from "./features/number-guess/NumberGuessModal";
 
 const App = () => {
   const [numberOpen, setNumberOpen] = useState(false);
@@ -21,6 +22,7 @@ const App = () => {
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [textCaseOpen, setTextCaseOpen] = useState(false);
   const [breathingOpen, setBreathingOpen] = useState(false);
+  const [numberGuessOpen, setNumberGuessOpen] = useState(false);
 
   return (
     <AppLayout>
@@ -43,6 +45,7 @@ const App = () => {
         <ToolCard title="تولید رمز عبور" icon="🔐" onClick={() => setPasswordOpen(true)} />
         <ToolCard title="مبدل متن (A/a)" icon="🔤" onClick={() => setTextCaseOpen(true)} />
         <ToolCard title="تنفس آگاهانه" icon="🧘‍♂️" onClick={() => setBreathingOpen(true)} />
+        <ToolCard title="بازی حدس عدد" icon="🎯" onClick={() => setNumberGuessOpen(true)} />
       </section>
 
       {/* Modals Containers */}
@@ -54,6 +57,7 @@ const App = () => {
       <PasswordGeneratorModal isOpen={passwordOpen} onClose={() => setPasswordOpen(false)} />
       <TextCaseConverterModal isOpen={textCaseOpen} onClose={() => setTextCaseOpen(false)} />
       <MindfulBreathingModal isOpen={breathingOpen} onClose={() => setBreathingOpen(false)} />
+      <NumberGuessModal isOpen={numberGuessOpen} onClose={() => setNumberGuessOpen(false)} />
     </AppLayout>
   );
 };
